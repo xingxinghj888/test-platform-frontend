@@ -1,0 +1,90 @@
+// 定义主题变量
+:root {
+  // 主色调
+  --el-color-primary: #409EFF;
+  --el-color-primary-light-3: #79bbff;
+  --el-color-primary-light-5: #a6d1ff;
+  --el-color-primary-light-7: #d3e8ff;
+  --el-color-primary-light-9: #ecf5ff;
+  
+  // 文字颜色
+  --el-text-color-primary: #303133;
+  --el-text-color-regular: #606266;
+  --el-text-color-secondary: #909399;
+  
+  // 背景色
+  --el-bg-color: #ffffff;
+  --el-bg-color-page: #f2f3f5;
+  --el-bg-color-overlay: #ffffff;
+  
+  // 边框颜色
+  --el-border-color: #dcdfe6;
+  --el-border-color-light: #e4e7ed;
+  
+  // 阴影
+  --el-box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  --el-box-shadow-light: 0 2px 4px rgba(0, 0, 0, .12);
+  
+  // 圆角
+  --el-border-radius-base: 4px;
+  --el-border-radius-small: 2px;
+  
+  // 过渡动画
+  --el-transition-duration: 0.3s;
+  --el-transition-function: ease-in-out;
+}
+
+// 暗色主题
+.dark-theme {
+  --el-color-primary: #409EFF;
+  --el-bg-color: #141414;
+  --el-bg-color-page: #0a0a0a;
+  --el-text-color-primary: #ffffff;
+  --el-text-color-regular: #e5eaf3;
+  --el-border-color: #4c4d4f;
+}
+
+// 全局过渡动画
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity var(--el-transition-duration) var(--el-transition-function);
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+// 加载动画
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+// 响应式布局辅助类
+.responsive-container {
+  width: 100%;
+  padding: 0 16px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  
+  @media screen and (min-width: 768px) {
+    max-width: 750px;
+  }
+  
+  @media screen and (min-width: 992px) {
+    max-width: 970px;
+  }
+  
+  @media screen and (min-width: 1200px) {
+    max-width: 1170px;
+  }
+}
