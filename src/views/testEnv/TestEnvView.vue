@@ -9,7 +9,7 @@
 				<el-button @click='addEnv' size="small" icon='CirclePlus' plain>添加</el-button>
 			</div>
 			<!-- 环境列表 -->
-			<el-menu :default-active="EnvInfo.id+''">
+			<el-menu :default-active="EnvInfo.id ? EnvInfo.id.toString() : ''">
 				<el-menu-item @click='selectEnv(item)' :index="item.id.toString()" v-for='item in envList'
 					key="item.id">
 					<img src="@/assets/icons/data.png" width="20" style="margin-right: 10px;">
@@ -84,6 +84,34 @@
 
 	let envList = ref([])
 	const pstore = ProjectStore()
+	let EnvInfo = ref({})
+	let env_name = ref('')
+	let env_host = ref('')
+	let env_headers = ref('{}')
+	let env_db = ref('{}')
+	let env_global_variable = ref('{}')
+	let env_debug_global_variable = ref('{}')
+	let env_global_func = ref('')
+
+	// 选择环境的方法
+	function selectEnv(env) {
+	  EnvInfo.value = env
+	  env_name.value = env.name
+	  env_host.value = env.host
+	  env_headers.value = JSON.stringify(env.header, null, 2)
+	  env_db.value = JSON.stringify(env.db, null, 2)
+	  env_global_variable.value = JSON.stringify(env.global_variable || {}, null, 2)
+	  env_debug_global_variable.value = JSON.stringify(env.debug_global_variable || {}, null, 2)
+	  env_global_func.value = env.global_func || ''
+	}
+
+	// 在组件挂载时获取环境列表
+	onMounted(async () => {
+	  await getEnvList()
+	  if (envList.value.length > 0) {
+	    selectEnv(envList.value[0])
+	  }
+	})
 	async function getEnvList() {
 		const project = pstore.pro.id
 		const response = await api.getEnvListApi(project)
@@ -94,13 +122,14 @@
 
 		}
 	}
-
 	// ----------添加测试环境==================
 	async function addEnv() {
 		const response = await api.addEnvApi({
 			project: pstore.pro.id,
 			name: "new Env",
-			host: "http://127.0.0.1"
+			host: "http://127.0.0.1",
+			headers: '{}',
+			db: '{}'
 		})
 		if (response.status === 201) {
 			// 给出提示
@@ -110,43 +139,10 @@
 			})
 			// 更新页面数据
 			await getEnvList()
+			// 设置新环境为当前选中项
+			selectEnv(response.data)
 		}
 	}
-
-	// ==============页面数据==============
-	let env_name = ref('')
-	let env_host = ref('')
-	let env_headers = ref('{}')
-	let env_db = ref('[]')
-	let env_global_variable = ref('{}')
-	let env_debug_global_variable = ref('{}')
-	let env_global_func = ref('')
-
-	// 保存当前选择的测试环境
-	let EnvInfo = ref({})
-
-	function selectEnv(env) {
-		// 保存当前选中的测试环境
-		EnvInfo.value = env
-		// 更新页面上编辑数据的值
-		env_name.value = env.name
-		env_host.value = env.host
-		env_headers.value = JSON.stringify(env.header, 0, 4) || "{}"
-		env_db.value = JSON.stringify(env.db, 0, 4) || "[]"
-		env_global_variable.value = JSON.stringify(env.global_variable, 0, 4) || "{}"
-		env_debug_global_variable.value = JSON.stringify(env.debug_global_variable, 0, 4) || "{}"
-		env_global_func.value = env.global_func
-	}
-
-	onMounted(async () => {
-		await getEnvList()
-		// 组件上数据挂载完毕之后，设置一个默认选中的测试环境
-		if (envList.value.length > 0) {
-			selectEnv(envList.value[0])
-		}
-	})
-
-	// ===============删除、保存修改、复制环境的方法================
 	function clickDeleteEnv() {
 		ElMessageBox.confirm(
 				'此操作不可恢复，确认要删除该测试环境?',
@@ -176,7 +172,6 @@
 
 			})
 	}
-
 	async function copyEnv() {
 		const params = EnvInfo.value
 		// console.log('复制的环境信息为：', params)

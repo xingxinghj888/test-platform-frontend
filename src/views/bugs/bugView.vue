@@ -233,7 +233,120 @@
 	})
 </script>
 
-<style scoped>
+<script>
+export default {
+  name: 'BugView',
+  components: {
+    Result
+  },
+  setup() {
+    const tools = tools
+    const chart = chart
+    const api = api
+    const state = reactive({
+      showBug: false,
+      bugInfo: null,
+      bugLogs: null,
+      updateBugDlg: false,
+      updateBugForm: {},
+    })
+    const proStore = ProjectStore()
+    let bugs = ref([])
+    let showBugs = ref([])
+
+    //获取所有的bug
+    async function getAllBug() {
+      const response = await api.getBugs({
+        project: proStore.pro.id
+      });
+      if (response.status === 200) {
+        bugs.value = response.data;
+        // 渲染图表
+        showTable();
+      }
+    }
+
+    const bugs1 = computed(() => {
+      let res = bugs.value.filter((item) => {
+        return item.status === '未处理';
+      });
+      return res
+    })
+    const bugs2 = computed(() => {
+      return bugs.value.filter((item) => {
+        return item.status === '处理中';
+      });
+    })
+    const bugs3 = computed(() => {
+      return bugs.value.filter((item) => {
+        return item.status === '处理完';
+      });
+    })
+    const bugs4 = computed(() => {
+      return bugs.value.filter((item) => {
+        return item.status === '无效bug';
+      });
+    })
+
+    function showTable() {
+      // 渲染图表
+      const ele = document.querySelector('#chart1Box');
+      const data = [bugs.value.length, bugs3.value.length, bugs2.value.length, bugs1.value.length, bugs4.value.length];
+      const dataLabel = ['bug总数', '处理完', '处理中', '未处理', '无效bug'];
+      chart.chart1(ele, data, dataLabel);
+      const ele2 = document.querySelector('#chart2Box');
+      chart.chart2(ele2, [{
+          value: bugs3.value.length,
+          name: '处理完'
+        },
+        {
+          value: bugs2.value.length,
+          name: '开发处理中'
+        },
+        {
+          value: bugs1.value.length,
+          name: '未处理'
+        },
+        {
+          value: bugs4.value.length,
+          name: '无效bug'
+        }
+      ]);
+    }
+    // 显示bug详情
+    async function showBugInfo(bug) {
+      state.bugInfo = bug;
+      const response = await api.getBugInfo(bug.id);
+      if (response.status === 200) {
+        state.bugLogs = response.data;
+      }
+      state.showBug = true
+    }
+    // 修改bug状态
+    async function updateBug() {
+      const reposne = await api.updateBug(state.updateBugForm.id, state.updateBugForm);
+      if (reposne.status === 200) {
+        ElMessage({
+          type: 'success',
+          message: '修改成功',
+          duration: 1000
+        });
+        getAllBug()
+        state.updateBugDlg = false;
+      }
+    }
+
+    onMounted(async () => {
+      // 获取数据
+      await getAllBug()
+      showBugs.value = bugs.value
+
+    })
+  }
+}
+</script>
+
+<style lang="scss" scoped>
 	.bug_list {
 		height: calc(100vh - 290px);
 		overflow-y: auto;

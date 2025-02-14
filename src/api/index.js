@@ -295,6 +295,62 @@ export default {
 	// 删除文件
 	deleteFile(id) {
 		return axios.delete(`/api/testPro/file/${id}/`)
-	}
+	},
+// ======================性能测试相关接口======================
+// 性能测试计划相关接口
+getPerfPlansApi(params) {
+  return axios.get('/api/performance/plans/', {params})
+},
+createPerfPlanApi(params) {
+  return axios.post('/api/performance/plans/', params)
+},
+updatePerfPlanApi(id, params) {
+  return axios.patch(`/api/performance/plans/${id}/`, params)
+},
+deletePerfPlanApi(id) {
+  return axios.delete(`/api/performance/plans/${id}/`)
+},
+
+// 性能测试配置相关接口
+getPerfConfigsApi(params) {
+  return axios.get('/api/performance/configs/', {params})
+},
+createPerfConfigApi(params) {
+  return axios.post('/api/performance/configs/', params)
+},
+updatePerfConfigApi(id, params) {
+  return axios.patch(`/api/performance/configs/${id}/`, params)
+},
+deletePerfConfigApi(id) {
+  return axios.delete(`/api/performance/configs/${id}/`)
+},
+
+// 性能测试执行相关接口
+startPerfTestApi(id) {
+  return axios.post(`/api/performance/tests/${id}/start/`)
+},
+stopPerfTestApi(id) {
+  return axios.post(`/api/performance/tests/${id}/stop/`)
+},
+pausePerfTestApi(id) {
+  return axios.post(`/api/performance/tests/${id}/pause/`)
+},
+resumePerfTestApi(id) {
+  return axios.post(`/api/performance/tests/${id}/resume/`)
+},
+getPerfTestStatusApi(id) {
+  return axios.get(`/api/performance/tests/${id}/status/`)
+},
+
+// 性能测试报告相关接口
+getPerfReportsApi(params) {
+  return axios.get('/api/performance/reports/', {params})
+},
+getPerfReportDetailApi(id) {
+  return axios.get(`/api/performance/reports/${id}/`)
+},
+deletePerfReportApi(id) {
+  return axios.delete(`/api/performance/reports/${id}/`)
+}
 
 }

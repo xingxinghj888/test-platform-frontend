@@ -1,14 +1,31 @@
 import PlanView from '@/views/performance/PlanView.vue'
+import ConfigView from '@/views/performance/ConfigView.vue'
+import MonitorView from '@/views/performance/MonitorView.vue'
 import ReportView from '@/views/performance/ReportView.vue'
-import PresetView from '@/views/performance/PresetView.vue'
 
 export default [
   {
-    path: '/performance/plan',
+    path: '/project/performance/plan',
     name: 'PerformancePlan',
     component: PlanView,
     meta: {
-      title: '性能测试计划'
+      title: '测试计划管理'
+    }
+  },
+  {
+    path: '/project/performance/config',
+    name: 'PerformanceConfig',
+    component: ConfigView,
+    meta: {
+      title: '测试配置管理'
+    }
+  },
+  {
+    path: '/project/performance/monitor',
+    name: 'PerformanceMonitor',
+    component: MonitorView,
+    meta: {
+      title: '测试执行监控'
     }
   },
   {
@@ -16,15 +33,7 @@ export default [
     name: 'PerformanceReport',
     component: ReportView,
     meta: {
-      title: '性能测试报告'
-    }
-  },
-  {
-    path: '/performance/preset',
-    name: 'PerformancePreset',
-    component: PresetView,
-    meta: {
-      title: '预设配置'
+      title: '测试报告分析'
     }
   }
 ]

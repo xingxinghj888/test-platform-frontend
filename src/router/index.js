@@ -102,30 +102,46 @@ const routes = [{
 					name: "测试报告",
 				}
 			},
-			{
-				path: '/project/performance/plan',
-				name: 'performance_plan',
-				component: () => import( /* webpackChunkName: "about" */ '../views/performance/PlanView.vue'),
-				meta: {
-					name: "性能测试计划",
-				}
-			},
-			{
-				path: '/project/performance/preset',
-				name: 'performance_preset',
-				component: () => import( /* webpackChunkName: "about" */ '../views/performance/PresetView.vue'),
-				meta: {
-					name: "预设配置",
-				}
-			},
-			{
-				path: '/project/performance/report',
-				name: 'performance_report',
-				component: () => import( /* webpackChunkName: "about" */ '../views/performance/ReportView.vue'),
-				meta: {
-					name: "报告管理",
-				}
-			},
+{
+	path: '/project/performance/plan',
+	name: 'performance_plan',
+	component: () => import( /* webpackChunkName: "about" */ '../views/performance/PlanView.vue'),
+	meta: {
+		name: "性能测试计划",
+	}
+},
+{
+	path: '/project/performance/monitor',
+	name: 'performance_monitor',
+	component: () => import( /* webpackChunkName: "about" */ '../views/performance/MonitorView.vue'),
+	meta: {
+		name: "测试执行监控",
+	}
+},
+{
+	path: '/project/performance/preset',
+	name: 'performance_preset',
+	component: () => import( /* webpackChunkName: "about" */ '../views/performance/PresetView.vue'),
+	meta: {
+		name: "预设配置",
+	}
+},
+{
+	path: '/project/performance/config',
+	name: 'performance_config',
+	component: () => import( /* webpackChunkName: "about" */ '../views/performance/ConfigView.vue'),
+	meta: {
+		name: "测试配置",
+	},
+},
+{
+	path: '/project/performance/report',
+	name: 'performance_report',
+	component: () => import( /* webpackChunkName: "about" */ '../views/performance/ReportView.vue'),
+	meta: {
+		name: "报告管理",
+	},
+},
 		]
 	},
 

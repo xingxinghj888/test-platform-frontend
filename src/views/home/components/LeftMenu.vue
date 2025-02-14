@@ -80,19 +80,24 @@
 			iconImg: require("@/assets/icons/chart-two.png"),
 			children: [
 				{
-					name: '计划管理',
+					name: '测试计划管理',
 					path: '/project/performance/plan',
 					iconImg: require("@/assets/icons/instruction.png")
 				},
 				{
-					name: '报告管理',
-					path: '/project/performance/report',
-					iconImg: require("@/assets/icons/file-addition.png")
+					name: '测试配置管理',
+					path: '/project/performance/config',
+					iconImg: require("@/assets/icons/setting-two.png")
 				},
 				{
-					name: '预设配置',
-					path: '/project/performance/preset',
-					iconImg: require("@/assets/icons/setting-two.png")
+					name: '测试执行监控',
+					path: '/project/performance/monitor',
+					iconImg: require("@/assets/icons/chart-two.png")
+				},
+				{
+					name: '测试报告分析',
+					path: '/project/performance/report',
+					iconImg: require("@/assets/icons/file-addition.png")
 				}
 			]
 		}

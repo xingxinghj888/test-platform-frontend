@@ -126,6 +126,8 @@
 	function clickAddCase(interId) {
 		// 显示窗口
 		isShowDrawer.value = true
+		// 重置用例标题
+		newCase.title = ""
 		newCase.interface = interId
 	}
 	// 发送添加用例的请求
